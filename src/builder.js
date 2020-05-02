@@ -1,4 +1,4 @@
-const usePrivateMap = function () {
+export const useBuilder = function () {
     var map = new Map();
 
     const get = function (key, fallback) {
@@ -27,8 +27,4 @@ const usePrivateMap = function () {
         has,
         tap,
     };
-};
-
-export {
-    usePrivateMap,
 };

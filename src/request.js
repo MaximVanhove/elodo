@@ -1,25 +1,20 @@
 import Qs from 'qs';
 import { transformResponse, transformError } from './transform';
-import { usePrivateMap } from './private';
+import { useBuilder } from './builder';
 import { ContentTypes } from './contentTypes';
 
 class RequestBuilder {
     constructor(model) {
-        const { get, set, has, tap } = usePrivateMap();
+        this.builder = useBuilder();
 
-        this.get = get;
-        this.set = set;
-        this.has = has;
-        this.tap = tap;
-
-        this.set('model', model);
-        this.set('route', model._route);
-        this.set('router', model._router);
-        this.set('client', model._client);
-        this.set('primaryKey', model._primaryKey);
-        this.set('headers.contentType', model._contentType);
-        this.set('parents', []);
-        this.set('params', {});
+        this.builder.set('model', model);
+        this.builder.set('route', model._route);
+        this.builder.set('router', model._router);
+        this.builder.set('client', model._client);
+        this.builder.set('primaryKey', model._primaryKey);
+        this.builder.set('headers.contentType', model._contentType);
+        this.builder.set('parents', []);
+        this.builder.set('params', {});
 
         return this;
     }
@@ -29,13 +24,13 @@ class RequestBuilder {
     }
 
     route (route) {
-        this.set('route', route);
+        this.builder.set('route', route);
 
         return this;
     }
 
     parents (...parents) {
-        this.set('parents', parents);
+        this.builder.set('parents', parents);
 
         return this;
     }
@@ -45,13 +40,13 @@ class RequestBuilder {
     }
 
     source (source) {
-        this.set('source', source);
+        this.builder.set('source', source);
 
         return this;
     }
 
     contentType (type) {
-        this.set('headers.contentType', type);
+        this.builder.set('headers.contentType', type);
 
         return this;
     }
@@ -61,7 +56,7 @@ class RequestBuilder {
             return this.params(...arguments);
         }
 
-        this.tap('params', function (params) {
+        this.builder.tap('params', function (params) {
             params[name] = value;
             return params;
         });
@@ -70,7 +65,7 @@ class RequestBuilder {
     }
 
     params (params) {
-        this.tap('params', function (value) {
+        this.builder.tap('params', function (value) {
             return Object.assign(value, params);
         });
 
@@ -78,7 +73,7 @@ class RequestBuilder {
     }
 
     filters (filters) {
-        this.tap('params', function (params) {
+        this.builder.tap('params', function (params) {
             params.filter = params.filter || {};
             params.filter = Object.assign({}, filters);
             return params;
@@ -100,13 +95,13 @@ class RequestBuilder {
     }
 
     include (...values) {
-        this.tap('params.include', (value) => {
+        this.builder.tap('params.include', (value) => {
             value.push(...values);
             return value;
         }, []);
 
-        this.tap('params', (value) => {
-            value.include = this.get('params.include').join(',');
+        this.builder.tap('params', (value) => {
+            value.include = this.builder.get('params.include').join(',');
             return value;
         });
 
@@ -114,13 +109,13 @@ class RequestBuilder {
     }
 
     sort (...values) {
-        this.tap('params.sort', (value) => {
+        this.builder.tap('params.sort', (value) => {
             value.push(...values);
             return value;
         }, []);
 
-        this.tap('params', (value) => {
-            value.sort = this.get('params.sort').join(',');
+        this.builder.tap('params', (value) => {
+            value.sort = this.builder.get('params.sort').join(',');
             return value;
         });
 
@@ -144,14 +139,14 @@ class RequestBuilder {
     }
 
     fields (fields) {
-        this.tap('params.fields', (value) => {
+        this.builder.tap('params.fields', (value) => {
             return Object.assign(value, fields);
         }, {});
 
-        this.tap('params', (params) => {
+        this.builder.tap('params', (params) => {
             params.fields = params.fields || {};
 
-            const resources = this.get('params.fields');
+            const resources = this.builder.get('params.fields');
             for (const resource in resources) {
                 params.fields[resource] = resources[resource].join(',');
             }
@@ -163,13 +158,13 @@ class RequestBuilder {
     }
 
     append (...values) {
-        this.tap('params.append', (value) => {
+        this.builder.tap('params.append', (value) => {
             value.push(...values);
             return value;
         }, []);
 
-        this.tap('params', (value) => {
-            value.append = this.get('params.append').join(',');
+        this.builder.tap('params', (value) => {
+            value.append = this.builder.get('params.append').join(',');
             return value;
         });
 
@@ -177,7 +172,7 @@ class RequestBuilder {
     }
 
     page (page) {
-        this.tap('params', function (params) {
+        this.builder.tap('params', function (params) {
             params.page = page;
             return params;
         });
@@ -186,7 +181,7 @@ class RequestBuilder {
     }
 
     limit (limit) {
-        this.tap('params', function (params) {
+        this.builder.tap('params', function (params) {
             params.limit = limit;
             return params;
         });
@@ -268,8 +263,8 @@ class RequestBuilder {
             paramsSerializer: this.getParamsSerializer(),
         });
 
-        if (this.has('source')) {
-            config.cancelToken = this.get('source').token;
+        if (this.builder.has('source')) {
+            config.cancelToken = this.builder.get('source').token;
         }
 
         return config;
@@ -287,41 +282,41 @@ class RequestBuilder {
     }
 
     getHeadersContentType () {
-        const type = this.get('headers.contentType');
+        const type = this.builder.get('headers.contentType');
         return ContentTypes[type] || ContentTypes.json;
     }
 
     getUrl (action) {
-        const route = `${this.get('route')}.${action}`;
-        const models = [this.get('parents'), this.get('model')].flat();
+        const route = `${this.builder.get('route')}.${action}`;
+        const models = [this.builder.get('parents'), this.builder.get('model')].flat();
 
         return this.getRouter().route(route, ...models);
     }
 
     getData () {
-        return this.get('headers.contentType') === 'formdata' ?
+        return this.builder.get('headers.contentType') === 'formdata' ?
             this.getModel().$formdata():
             this.getModel().$data();
     }
 
     getModel () {
-        return this.get('model');
+        return this.builder.get('model');
     }
 
     getRouter () {
-        return this.get('router');
+        return this.builder.get('router');
     }
 
     getPrimaryKey () {
-        return this.get('primaryKey');
+        return this.builder.get('primaryKey');
     }
 
     getClient () {
-        return this.get('client');
+        return this.builder.get('client');
     }
 
     getParams () {
-        return this.get('params');
+        return this.builder.get('params');
     }
 
     getParamsSerializer () {
@@ -349,10 +344,6 @@ class RequestBuilder {
  * Build resource request
  * @param {object} model
  */
-const request = function (model) {
+export const request = function (model) {
     return new RequestBuilder(model);
-}
-
-export {
-    request,
 };

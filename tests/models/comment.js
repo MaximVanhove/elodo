@@ -1,4 +1,4 @@
-import { Model } from './model';
+import { Resource } from '../setup/resource';
 import { Like } from './like';
 
 /**
@@ -6,7 +6,7 @@ import { Like } from './like';
  *
  * @class Comment
  */
-export class Comment extends Model {
+export class Comment extends Resource {
     get _attributes () {
         return {
             id: null,

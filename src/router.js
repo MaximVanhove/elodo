@@ -20,10 +20,6 @@ class Router {
         }
     }
 
-    static create () {
-        return new this(...arguments);
-    }
-
     index (name, callback) {
         this.set(`${name}.index`, callback);
     }
@@ -109,6 +105,6 @@ class Router {
     }
 }
 
-export {
-    Router,
-};
+export const createRouter = function () {
+    return new Router();
+}

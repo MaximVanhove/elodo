@@ -1,7 +1,7 @@
 import Moxios from 'moxios';
 import { Media } from '../models/media';
 
-describe('post', () => {
+describe('media', () => {
     beforeEach(function () {
         Moxios.install();
     });

@@ -1,24 +1,27 @@
 {
-  "name": "model",
+  "name": "elodo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "build": "rollup --config rollup.config.js",
+    "build:utils": "rollup --config utils/rollup.config.js"
   },
   "author": "Maxim Vanhove",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
+    "@rollup/plugin-babel": "^5.0.0",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.3",
     "axios": "^0.19.0",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "lodash": "^4.17.15",
-    "moxios": "^0.4.0"
-  },
-  "dependencies": {
-    "qs": "^6.9.3"
+    "moxios": "^0.4.0",
+    "qs": "^6.9.3",
+    "rollup": "^2.9.1"
   }
 }

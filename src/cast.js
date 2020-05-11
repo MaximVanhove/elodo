@@ -1,6 +1,4 @@
-import get from 'lodash/get';
-import has from 'lodash/has';
-import set from 'lodash/set';
+import { get, has, set } from './utils';
 
 export const Cast = {
     cast(model, attribute, cast) {

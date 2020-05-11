@@ -1,4 +1,4 @@
-import { Model } from './model';
+import { Resource } from '../setup/resource';
 import { Comment } from './comment';
 
 /**
@@ -6,7 +6,7 @@ import { Comment } from './comment';
  *
  * @class Cast
  */
-export class Cast extends Model {
+export class Cast extends Resource {
     get _attributes () {
         return {
             'id': null,

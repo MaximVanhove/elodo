@@ -1,10 +1,9 @@
 import Axios from 'axios';
 
-const getSource = () => {
-    const CancelToken = Axios.CancelToken;
-    return CancelToken.source();
+export const createSource = () => {
+    return Axios.CancelToken.source();
 };
 
-export {
-    getSource,
+export const isCancel = (error) => {
+    return Axios.isCancel(error);
 };

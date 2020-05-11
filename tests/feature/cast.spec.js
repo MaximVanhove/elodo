@@ -1,16 +1,7 @@
-import Moxios from 'moxios';
 import { Cast } from '../models/cast';
 import { Comment } from '../models/comment';
 
 describe('cast', () => {
-    beforeEach(function () {
-        Moxios.install();
-    });
-
-    afterEach(function () {
-        Moxios.uninstall();
-    });
-
     test('it can transform response attributes', async () => {
         const response = {
             'to_integer': "1",

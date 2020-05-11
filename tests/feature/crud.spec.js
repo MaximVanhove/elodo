@@ -144,6 +144,23 @@ describe('crud', () => {
         expect(post.body).toEqual(response.body);
     });
 
+    test('it can store custom data', async () => {
+        const url = 'posts/1/sync';
+        const data = {
+            ids: [1, 2, 3],
+        };
+
+        Moxios.stubRequest(/.*/, {});
+
+        const post = Post.$create({ id: 1 });
+        await post.$route('posts.sync').store({ data });
+
+        const request = Moxios.requests.mostRecent();
+        expect(request.url).toEqual(url);
+        expect(request.config.method).toEqual('post');
+        expect(request.config.data).toMatchSnapshot();
+    });
+
     test('it can catch validation errors', () => {
         expect.assertions(1);
 

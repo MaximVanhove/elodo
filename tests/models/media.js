@@ -1,12 +1,11 @@
-import { ContentTypes } from '../../src';
-import { Model } from './model';
+import { Resource } from '../setup/resource';
 
 /**
  * Media resource
  *
  * @class Media
  */
-export class Media extends Model {
+export class Media extends Resource {
     get _attributes () {
         return {
             id: null,

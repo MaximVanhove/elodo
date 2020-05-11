@@ -1,4 +1,4 @@
-import Qs from 'qs';
+import { stringify } from './utils';
 import { transformResponse, transformError } from './transform';
 import { useBuilder } from './builder';
 import { ContentTypes } from './contentTypes';
@@ -202,30 +202,10 @@ class RequestBuilder {
         return this.show();
     }
 
-    index () {
-        const method = 'get';
-        const url = this.getUrl('index');
-
-        return this.request({
-            method,
-            url,
-        });
-    }
-
-    show () {
-        const method = 'get';
-        const url = this.getUrl('show');
-
-        return this.request({
-            method,
-            url,
-        });
-    }
-
-    store () {
-        const method = 'post';
-        const data = this.getData();
-        const url = this.getUrl('store');
+    index (options = {}) {
+        const method = options.method || 'get';
+        const data = options.data || null;
+        const url = options.url || this.getUrl('index');
 
         return this.request({
             method,
@@ -234,10 +214,10 @@ class RequestBuilder {
         });
     }
 
-    update () {
-        const method = 'put';
-        const data = this.getData();
-        const url = this.getUrl('update');
+    show (options = {}) {
+        const method = options.method || 'get';
+        const data = options.data || null;
+        const url = options.url || this.getUrl('show');
 
         return this.request({
             method,
@@ -246,14 +226,51 @@ class RequestBuilder {
         });
     }
 
-    destroy () {
-        const method = 'delete';
-        const url = this.getUrl('destroy');
+    store (options = {}) {
+        const method = options.method || 'post';
+        const data = options.data || this.getData();
+        const url = options.url || this.getUrl('store');
 
         return this.request({
             method,
+            data,
             url,
         });
+    }
+
+    update (options = {}) {
+        const method = options.method || 'put';
+        const data = options.data || this.getData();
+        const url = options.url || this.getUrl('update');
+
+        return this.request({
+            method,
+            data,
+            url,
+        });
+    }
+
+    destroy (options = {}) {
+        const method = options.method || 'delete';
+        const data = options.data || null;
+        const url = options.url || this.getUrl('destroy');
+
+        return this.request({
+            method,
+            data,
+            url,
+        });
+    }
+
+    request (options) {
+        const model = this.getModel();
+        const client = this.getClient();
+        const config = this.getConfig(options);
+
+        return client
+            .request(config)
+            .then(response => transformResponse(response, model))
+            .catch(error => transformError(error, model));
     }
 
     getConfig (options = {}) {
@@ -321,22 +338,11 @@ class RequestBuilder {
 
     getParamsSerializer () {
         return function (params) {
-            return Qs.stringify(params, {
+            return stringify(params, {
                 arrayFormat: 'brackets',
                 encode: false,
             });
         };
-    }
-
-    request (options) {
-        const model = this.getModel();
-        const client = this.getClient();
-        const config = this.getConfig(options);
-
-        return client
-            .request(config)
-            .then(response => transformResponse(response, model))
-            .catch(error => transformError(error, model));
     }
 }
 

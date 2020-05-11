@@ -1,10 +1,9 @@
-import Axios from 'axios';
 import CollectionTransform from './transforms/collection';
 import DataCollectionTransform from './transforms/dataCollection';
 import ModelTransform from './transforms/model';
 import DataTransform from './transforms/data';
 
-const transformResponse = function (response, model) {
+export const transformResponse = function (response, model) {
     const transforms = [
         DataCollectionTransform,
         CollectionTransform,
@@ -22,13 +21,6 @@ const transformResponse = function (response, model) {
     return DataTransform.resolve(response, model);
 };
 
-const transformError = function (error) {
-    error.isCancel = Axios.isCancel(error);
-
+export const transformError = function (error) {
     return Promise.reject(error);
-};
-
-export {
-    transformResponse,
-    transformError,
 };

@@ -1,6 +1,6 @@
 import Moxios from 'moxios';
 import { Post } from '../models/post';
-import { getSource } from '../../src';
+import { createSource, isCancel } from '../../src';
 
 describe('post', () => {
     beforeEach(function () {
@@ -12,29 +12,33 @@ describe('post', () => {
     });
 
     test('it can cancel request for queries', () => {
+        expect.assertions(1);
         Moxios.stubRequest(/.*/, { status: 200 });
 
-        const source = getSource();
+        const errorHandler = (error) => {
+            expect(isCancel(error)).toEqual(true);
+        }
 
-        const promise = Post.$request().source(source).store();
+        const source = createSource();
+        const promise = Post.$source(source).index().catch(errorHandler);
         source.cancel();
 
-        return expect(promise).rejects.toMatchObject({
-            isCancel: true,
-        });
+        return promise;
     });
 
     test('it can cancel request for crud actions', () => {
+        expect.assertions(1);
         Moxios.stubRequest(/.*/, { status: 200 });
 
-        const source = getSource();
-        const post = Post.$create();
+        const errorHandler = (error) => {
+            expect(isCancel(error)).toEqual(true);
+        }
 
-        const promise = post.$request().source(source).store();
+        const post = Post.$create();
+        const source = createSource();
+        const promise = post.$source(source).store().catch(errorHandler);
         source.cancel();
 
-        return expect(promise).rejects.toMatchObject({
-            isCancel: true,
-        });
+        return promise;
     });
 });

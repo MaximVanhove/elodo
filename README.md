@@ -124,11 +124,6 @@ export const client = Axios.create();
 ```js
 import { Resource } from '../resource';
 
-/**
- * Post resource
- *
- * @class Post
- */
 export class Post extends Resource {
     get _attributes () {
         return {

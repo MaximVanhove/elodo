@@ -8,6 +8,10 @@
     "build": "rollup --config rollup.config.js",
     "build:utils": "rollup --config utils/rollup.config.js"
   },
+  "files": [
+    "/dist",
+    "/src"
+  ],
   "author": "Maxim Vanhove",
   "license": "ISC",
   "devDependencies": {

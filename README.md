@@ -92,7 +92,7 @@ export const Resource = createResource({
 ```js
 import { createRouter } from 'elodo';
 
-const router = createRouter();
+export const router = createRouter();
 
 router.prefix('http://api.com/api/v1/', function (router) {
     // Register each crud action
@@ -105,10 +105,6 @@ router.prefix('http://api.com/api/v1/', function (router) {
     // Or register all crud actions at once
     router.resource('posts');
 });
-
-export {
-    router,
-};
 ```
 
 `api/client.js`
@@ -116,7 +112,9 @@ export {
 ```js
 import Axios from 'axios';
 
-export const client = Axios.create();
+export const client = function () {
+    return Axios.create();
+};
 ```
 
 `api/resources/post.js`

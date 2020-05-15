@@ -1,6 +1,6 @@
 import { createRouter } from '../../src';
 
-const router = createRouter();
+export const router = createRouter();
 
 router.resource('casts');
 router.resource('comments');
@@ -16,7 +16,3 @@ router.store('posts.sync', (post) => `posts/${post.id}/sync`);
 router.prefix('http://api.com/api/v1/', function (router) {
     router.resource('authors');
 });
-
-export {
-    router,
-};

@@ -267,7 +267,7 @@ class RequestBuilder {
         const client = this.getClient();
         const config = this.getConfig(options);
 
-        return client
+        return client()
             .request(config)
             .then(response => transformResponse(response, model))
             .catch(error => transformError(error, model));

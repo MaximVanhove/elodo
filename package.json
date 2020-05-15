@@ -1,6 +1,6 @@
 {
   "name": "elodo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "rollup": "^2.9.1"
   },
   "bugs": {
-      "url": "https://github.com/MaximVanhove/elodo/issues"
+    "url": "https://github.com/MaximVanhove/elodo/issues"
   },
   "homepage": "https://github.com/MaximVanhove/elodo#readme"
 }

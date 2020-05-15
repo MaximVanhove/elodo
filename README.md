@@ -4,21 +4,21 @@ Communicate with any REST API in an elegant and object oriented way.
 
 ## TOC
 
-[Quick preview](https://github.com/MaximVanhove/elodo#quick-preview)
+[Quick preview](#quick-preview)
 
-[Installation](https://github.com/MaximVanhove/elodo#installation)
+[Installation](#installation)
 
-[Setup](https://github.com/MaximVanhove/elodo#setup)
+[Setup](#setup)
 
-[Fetching resources](https://github.com/MaximVanhove/elodo#fetching-resources)
+[Fetching resources](#fetching-resources)
 
-[Persisting resources](https://github.com/MaximVanhove/elodo#persisting-resources)
+[Persisting resources](#persisting-resources)
 
-[Cancel requests](https://github.com/MaximVanhove/elodo#cancel-requests)
+[Cancel requests](#cancel-requests)
 
-[Cast attributes](https://github.com/MaximVanhove/elodo#cast-attributes)
+[Cast attributes](#cast-attributes)
 
-[File uploads](https://github.com/MaximVanhove/elodo#file-uploads)
+[File uploads](#file-uploads)
 
 ## Quick preview
 
@@ -163,23 +163,23 @@ await post.$destroy();  // DELETE request to "/posts/1"
 
 ## Fetching resources
 
-[Fetch list of resources](https://github.com/MaximVanhove/elodo#fetch-list-of-resources)
+[Fetch list of resources](#fetch-list-of-resources)
 
-[Fetch single resource](https://github.com/MaximVanhove/elodo#fetch-single-resource)
+[Fetch single resource](#fetch-single-resource)
 
-[Fetch filtered list of resources](https://github.com/MaximVanhove/elodo#fetch-filtered-list-of-resources)
+[Fetch filtered list of resources](#fetch-filtered-list-of-resources)
 
-[Fetch list of resources sorted by an attribute](https://github.com/MaximVanhove/elodo#fetch-list-of-resources-sorted-by-an-attribute)
+[Fetch list of resources sorted by an attribute](#fetch-list-of-resources-sorted-by-an-attribute)
 
-[Fetch list of resources with relationships](https://github.com/MaximVanhove/elodo#fetch-list-of-resources-with-relationships)
+[Fetch list of resources with relationships](#fetch-list-of-resources-with-relationships)
 
-[Fetch list of resources with selected fields](https://github.com/MaximVanhove/elodo#fetch-list-of-resources-with-selected-fields)
+[Fetch list of resources with selected fields](#fetch-list-of-resources-with-selected-fields)
 
-[Fetch list of resources with appended fields](https://github.com/MaximVanhove/elodo#fetch-list-of-resources-with-appended-fields)
+[Fetch list of resources with appended fields](#fetch-list-of-resources-with-appended-fields)
 
-[Fetch list of resources with specific params](https://github.com/MaximVanhove/elodo#fetch-list-of-resources-with-specific-params)
+[Fetch list of resources with specific params](#fetch-list-of-resources-with-specific-params)
 
-[Fetch paginated list of resources](https://github.com/MaximVanhove/elodo#fetch-paginated-list-of-resources)
+[Fetch paginated list of resources](#fetch-paginated-list-of-resources)
 
 ### Fetch list of resources
 
@@ -333,11 +333,11 @@ await Post
 
 ## Persisting resources
 
-[Store resource](https://github.com/MaximVanhove/elodo#store-resource)
+[Store resource](#store-resource)
 
-[Update resource](https://github.com/MaximVanhove/elodo#update-resource)
+[Update resource](#update-resource)
 
-[Delete resource](https://github.com/MaximVanhove/elodo#delete-resource)
+[Delete resource](#delete-resource)
 
 ### Store resource
 
@@ -427,11 +427,11 @@ source.cancel();
 
 ## Cast attributes
 
-[Cast nested properties](https://github.com/MaximVanhove/elodo#cast-nested-properties)
+[Cast nested properties](#cast-nested-properties)
 
-[Custom cast](https://github.com/MaximVanhove/elodo#custom-cast)
+[Custom cast](#custom-cast)
 
-[Cast to relationship](https://github.com/MaximVanhove/elodo#cast-to-relationship)
+[Cast to relationship](#cast-to-relationship)
 
 The cast property allows you to convert attributes coming from the server.
 

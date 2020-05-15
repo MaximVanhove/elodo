@@ -2,6 +2,18 @@
   "name": "elodo",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaximVanhove/elodo"
+  },
+  "keywords": [
+    "elodo",
+    "rest",
+    "restfull",
+    "api",
+    "resource",
+    "resources"
+  ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
@@ -13,7 +25,7 @@
     "/src"
   ],
   "author": "Maxim Vanhove",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
@@ -27,5 +39,9 @@
     "moxios": "^0.4.0",
     "qs": "^6.9.3",
     "rollup": "^2.9.1"
-  }
+  },
+  "bugs": {
+      "url": "https://github.com/MaximVanhove/elodo/issues"
+  },
+  "homepage": "https://github.com/MaximVanhove/elodo#readme"
 }

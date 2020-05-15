@@ -4,9 +4,9 @@ Communicate with any REST API in an elegant and object oriented way.
 
 ## TOC
 
-[Installation](https://github.com/MaximVanhove/elodo#installation)
-
 [Quick preview](https://github.com/MaximVanhove/elodo#quick-preview)
+
+[Installation](https://github.com/MaximVanhove/elodo#installation)
 
 [Setup](https://github.com/MaximVanhove/elodo#setup)
 
@@ -19,10 +19,6 @@ Communicate with any REST API in an elegant and object oriented way.
 [Cast attributes](https://github.com/MaximVanhove/elodo#cast-attributes)
 
 [File uploads](https://github.com/MaximVanhove/elodo#file-uploads)
-
-## Installation
-
-`npm install elodo`
 
 ## Quick preview
 
@@ -53,6 +49,16 @@ const posts = await Post
 // Each post is tranformed to an instance of Post
 const post = posts[0];
 await post.$update();
+```
+
+## Installation
+
+```
+npm install elodo
+```
+
+```
+npm install axios
 ```
 
 ## Setup

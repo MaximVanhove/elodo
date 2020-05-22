@@ -33,4 +33,14 @@ describe('cast', () => {
 
         expect(cast.nested.to_integer).toEqual(1);
     });
+
+    test('it can with custom callback', async () => {
+        const response = {
+            to_callback: 'notcalled',
+        };
+
+        const cast = await Cast.$create(response);
+
+        expect(cast.to_callback).toEqual('called');
+    });
 });

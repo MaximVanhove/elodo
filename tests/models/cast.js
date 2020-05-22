@@ -15,6 +15,7 @@ export class Cast extends Resource {
             'to_boolean': null,
             'to_object': null,
             'to_date': null,
+            'to_callback': null,
             'nested': {
                 'to_integer': null,
             },
@@ -30,6 +31,7 @@ export class Cast extends Resource {
             'to_date': 'date',
             'to_comments': 'relationship:comments',
             'nested.to_integer': 'int',
+            'to_callback': (value) => ('called'),
         };
     }
 

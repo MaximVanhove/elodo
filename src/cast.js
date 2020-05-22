@@ -6,6 +6,11 @@ export const Cast = {
             return model;
         }
 
+        if (typeof cast === 'function') {
+            const callback = cast;
+            return this.transform(model, attribute, callback);
+        }
+
         const [key, argument] = cast.split(':');
 
         if (!has(this, key)) {
@@ -14,6 +19,15 @@ export const Cast = {
 
         const value = get(model, attribute);
         const castedValue = this[key]({ key, value, argument, model });
+
+        set(model, attribute, castedValue);
+
+        return model;
+    },
+
+    transform (model, attribute, callback) {
+        const value = get(model, attribute);
+        const castedValue = callback(value);
 
         set(model, attribute, castedValue);
 

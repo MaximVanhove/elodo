@@ -14,11 +14,15 @@ Communicate with any REST API in an elegant and object oriented way.
 
 [Persisting resources](#persisting-resources)
 
+[Relationships](#relationships)
+
 [Cancel requests](#cancel-requests)
 
 [Cast attributes](#cast-attributes)
 
 [File uploads](#file-uploads)
+
+[Options](#options)
 
 ## Quick preview
 
@@ -109,6 +113,12 @@ router.prefix('http://api.com/api/v1/', function (router) {
     router.destroy('posts', (post) => `posts/${post.id}`);
 
     // Or register all crud actions at once
+    // $index GET /posts
+    // $store POST /posts
+    // $show GET /posts/{post.id}
+    // $store POST /posts/{post.id}
+    // $update PUT /posts/{post.id}
+    // $destroy DELETE /posts/{post.id}
     router.resource('posts');
 });
 ```
@@ -294,6 +304,16 @@ const posts = await Post
     .index();
 ```
 
+### Fetch list of resources with limited resultes
+
+```js
+// GET /posts?limit=15
+const posts = await Post
+    .$request()
+    .limit(15)
+    .index();
+```
+
 ### Fetch list of resources with specific params
 
 ```js
@@ -328,6 +348,17 @@ Set the page directly
 await Post
     .$request()
     .page(1)
+    .index();
+```
+
+Use with the limit param
+
+```js
+// GET /posts?page=1&limit=15
+await Post
+    .$request()
+    .page(1)
+    .limit(15)
     .index();
 ```
 
@@ -378,6 +409,45 @@ Or use the `$delete` alias
 // DELETE /posts/1
 const post = await Post.$find(1);
 await post.$delete();
+```
+
+## Relationships
+
+Start with defining your relationship routes
+
+```js
+import { createRouter } from 'elodo';
+
+export const router = createRouter();
+
+router.prefix('http://api.com/api/v1/', function (router) {
+    // $index GET /posts
+    // $store POST /posts
+    // $show GET /posts/{post.id}
+    // $store POST /posts/{post.id}
+    // $update PUT /posts/{post.id}
+    // $destroy DELETE /posts/{post.id}
+    router.resource('posts');
+
+    // $index GET /posts/{post.id}/comments
+    // $store POST /posts/{post.id}/comments
+    // $show GET /posts/{post.id}/comments/{comment.id}
+    // $store POST /posts/{post.id}/comments/{comment.id}
+    // $update PUT /posts/{post.id}/comments/{comment.id}
+    // $destroy DELETE /posts/{post.id}/comments/{comment.id}
+    router.resource('posts.comments');
+});
+```
+
+```js
+const post = Post.$find(1);
+const comment = Comment.$create({ body: 'Hello' });
+
+// POST /posts/1/comments
+await comment.$parent(post).store();
+
+// POST /comments
+await comment.$store();
 ```
 
 ## Cancel requests
@@ -533,7 +603,7 @@ export class Post extends Resource {
 
     get _casts () {
         return {
-            comments: (value) => Comment.create(value),
+            comments: (value) => Comment.$create(value),
         };
     }
 
@@ -583,3 +653,69 @@ const post = Post.$create({ file });
 // POST request to "/posts" with file in formdata
 await post.$store();
 ```
+
+## Options
+
+To add or override options you can create a base resource
+
+```js
+import { createResource } from 'elodo';
+import { client } from './client';
+import { router } from './router';
+
+const BaseResource = createResource({
+    client,
+    router,
+});
+
+export class Resource extends BaseResource {
+    /**
+     * Default attributes
+     */
+    get _attributes () {
+        return {
+            id: null,
+        };
+    }
+
+    /**
+     * Default route
+     */
+    get _route () {
+        return 'default.route';
+    }
+
+    /**
+     * Default primary key
+     */
+    get _primaryKey () {
+        return 'id';
+    }
+
+    /**
+     * Default casts
+     */
+    get _casts () {
+        return {};
+    }
+
+    /**
+     * Default content type
+     */
+    get _contentType () {
+        return 'json';
+    }
+
+    /**
+     * Custom $latest function
+     */
+    static $latest () {
+        return this.$request()
+            .limit(5)
+            .sortDesc('created_at')
+            .index()
+        ;
+    }
+}
+```
+

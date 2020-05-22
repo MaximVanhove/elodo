@@ -226,6 +226,10 @@ class RequestBuilder {
         });
     }
 
+    refresh () {
+        return this.show(...arguments);
+    }
+
     store (options = {}) {
         const method = options.method || 'post';
         const data = options.data || this.getData();
@@ -236,6 +240,10 @@ class RequestBuilder {
             data,
             url,
         });
+    }
+
+    save () {
+        return this.store(...arguments);
     }
 
     update (options = {}) {
@@ -260,6 +268,10 @@ class RequestBuilder {
             data,
             url,
         });
+    }
+
+    delete () {
+        return this.destroy(...arguments);
     }
 
     request (options) {

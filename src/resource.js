@@ -112,10 +112,6 @@ export const createResource = function (options) {
             return this.$request().find(...arguments);
         }
 
-        static $first () {
-            return this.$request().first(...arguments);
-        }
-
         $request () {
             return request(this);
         }

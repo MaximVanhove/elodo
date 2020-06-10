@@ -1,13 +1,11 @@
 import CollectionTransform from './transforms/collection';
 import DataCollectionTransform from './transforms/dataCollection';
 import ModelTransform from './transforms/model';
-import DataTransform from './transforms/data';
 
 export const transformResponse = function (response, model) {
     const transforms = [
         DataCollectionTransform,
         CollectionTransform,
-        ModelTransform,
     ];
 
     for (let index = 0; index < transforms.length; index++) {
@@ -18,7 +16,7 @@ export const transformResponse = function (response, model) {
         }
     }
 
-    return DataTransform.resolve(response, model);
+    return ModelTransform.resolve(response, model);
 };
 
 export const transformError = function (error) {

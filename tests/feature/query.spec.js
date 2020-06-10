@@ -39,8 +39,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .filter('title', 'Hello')
-            .index();
+            .$filter('title', 'Hello')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -60,8 +60,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .where('title', 'Hello')
-            .index();
+            .$where('title', 'Hello')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -81,8 +81,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .filter({ id: 1, title: 'Hello' })
-            .index();
+            .$filter({ id: 1, title: 'Hello' })
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -102,8 +102,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .param('param', 'value')
-            .index();
+            .$param('param', 'value')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -123,8 +123,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .param({ 'paramOne': 'valueOne', 'paramTwo': 'valueTwo' })
-            .index();
+            .$param({ 'paramOne': 'valueOne', 'paramTwo': 'valueTwo' })
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -150,8 +150,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .include('comments')
-            .index();
+            .$include('comments')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -180,8 +180,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .include('comments', 'author')
-            .index();
+            .$include('comments', 'author')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -206,8 +206,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .sort('name')
-            .index();
+            .$sort('name')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -232,8 +232,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .sortDesc('name')
-            .index();
+            .$sortDesc('name')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -258,8 +258,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .sortDesc('name', 'id')
-            .index();
+            .$sortDesc('name', 'id')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -284,9 +284,9 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .sort('id')
-            .sortDesc('name')
-            .index();
+            .$sort('id')
+            .$sortDesc('name')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -305,8 +305,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .fields({ 'posts': ['id', 'title'] })
-            .index();
+            .$fields({ 'posts': ['id', 'title'] })
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -326,8 +326,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .append('date')
-            .index();
+            .$append('date')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -347,8 +347,8 @@ describe('query', () => {
 
         const posts = await Post
             .$request()
-            .append('title', 'date')
-            .index();
+            .$append('title', 'date')
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);

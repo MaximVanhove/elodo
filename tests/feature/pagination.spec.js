@@ -39,11 +39,11 @@ describe('post', () => {
 
         const pagination = await Post
             .$request()
-            .page({
+            .$page({
                 size: 15,
                 number: 1,
             })
-            .index();
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -79,8 +79,8 @@ describe('post', () => {
 
         await Post
             .$request()
-            .page(1)
-            .index();
+            .$page(1)
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -93,8 +93,8 @@ describe('post', () => {
 
         await Post
             .$request()
-            .limit(15)
-            .index();
+            .$limit(15)
+            .$index();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);

@@ -47,8 +47,8 @@ await post.$update();
 // GET request to "http://api.com/api/posts?include=comments,author"
 const posts = await Post
     .$request()
-    .include('comments', 'author')
-    .index();
+    .$include('comments', 'author')
+    .$index();
 
 // Each post is tranformed to an instance of Post
 const post = posts[0];
@@ -229,8 +229,8 @@ await post.$refresh();
 // GET /posts?filter[title]=Hello
 const posts = await Post
     .$request()
-    .filter('title', 'Hello')
-    .index();
+    .$filter('title', 'Hello')
+    .$index();
 ```
 
 You can also use the `where` alias
@@ -239,8 +239,8 @@ You can also use the `where` alias
 // GET /posts?filter[title]=Hello
 const posts = await Post
     .$request()
-    .where('title', 'Hello')
-    .index();
+    .$where('title', 'Hello')
+    .$index();
 ```
 
 ### Fetch list of resources sorted by an attribute
@@ -249,8 +249,8 @@ const posts = await Post
 // GET /posts?sort=title
 const posts = await Post
     .$request()
-    .sort('title')
-    .index();
+    .$sort('title')
+    .$index();
 ```
 
 Sort descending
@@ -259,8 +259,8 @@ Sort descending
 // GET /posts?sort=-title
 const posts = await Post
     .$request()
-    .sortDesc('title')
-    .index();
+    .$sortDesc('title')
+    .$index();
 ```
 
 Combine multiple sorts
@@ -269,9 +269,9 @@ Combine multiple sorts
 // GET /posts?sort=id,-name
 const posts = await Post
     .$request()
-    .sort('id')
-    .sortDesc('name')
-    .index();
+    .$sort('id')
+    .$sortDesc('name')
+    .$index();
 ```
 
 ### Fetch list of resources with relationships
@@ -280,8 +280,8 @@ const posts = await Post
 // GET /posts?include=comments,author
 const posts = await Post
     .$request()
-    .include('comments', 'author')
-    .index();
+    .$include('comments', 'author')
+    .$index();
 ```
 
 ### Fetch list of resources with selected fields
@@ -290,8 +290,8 @@ const posts = await Post
 // GET /posts?fields[posts]=id,title
 const posts = await Post
     .$request()
-    .fields({ 'posts': ['id', 'title'] })
-    .index();
+    .$fields({ 'posts': ['id', 'title'] })
+    .$index();
 ```
 
 ### Fetch list of resources with appended fields
@@ -300,8 +300,8 @@ const posts = await Post
 // GET /posts?append=published_at
 const posts = await Post
     .$request()
-    .append('published_at')
-    .index();
+    .$append('published_at')
+    .$index();
 ```
 
 ### Fetch list of resources with limited resultes
@@ -310,8 +310,8 @@ const posts = await Post
 // GET /posts?limit=15
 const posts = await Post
     .$request()
-    .limit(15)
-    .index();
+    .$limit(15)
+    .$index();
 ```
 
 ### Fetch list of resources with specific params
@@ -320,8 +320,8 @@ const posts = await Post
 // GET /posts?param=value
 const posts = await Post
     .$request()
-    .param('param', 'value')
-    .index();
+    .$param('param', 'value')
+    .$index();
 ```
 
 ### Fetch paginated list of resources
@@ -330,11 +330,11 @@ const posts = await Post
 // GET /posts?page[size]=15&page[number]=1
 const pagination = await Post
     .$request()
-    .page({
+    .$page({
         size: 15,
         number: 1,
     })
-    .index();
+    .$index();
 
 // Pagination data is tranformed to instances of Post
 const post = pagination.data[0];
@@ -347,8 +347,8 @@ Set the page directly
 // GET /posts?page=1
 await Post
     .$request()
-    .page(1)
-    .index();
+    .$page(1)
+    .$index();
 ```
 
 Use with the limit param
@@ -357,9 +357,9 @@ Use with the limit param
 // GET /posts?page=1&limit=15
 await Post
     .$request()
-    .page(1)
-    .limit(15)
-    .index();
+    .$page(1)
+    .$limit(15)
+    .$index();
 ```
 
 ## Persisting resources
@@ -444,7 +444,7 @@ const post = Post.$find(1);
 const comment = Comment.$create({ body: 'Hello' });
 
 // POST /posts/1/comments
-await comment.$parent(post).store();
+await comment.$parent(post).$store();
 
 // POST /comments
 await comment.$store();
@@ -459,7 +459,7 @@ import { createSource, isCancel } from 'elodo';
 const source = createSource();
 
 Post.$source(source)
-    .index()
+    .$index()
     .then((posts) => {
         ...
     })
@@ -482,7 +482,7 @@ const source = createSource();
 const post = Post.$create();
 
 post.$source(source)
-    .store()
+    .$store()
     .then((posts) => {
         // Render posts
     })
@@ -711,9 +711,9 @@ export class Resource extends BaseResource {
      */
     static $latest () {
         return this.$request()
-            .limit(5)
-            .sortDesc('created_at')
-            .index()
+            .$limit(5)
+            .$sortDesc('created_at')
+            .$index()
         ;
     }
 }

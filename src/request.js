@@ -23,37 +23,37 @@ class RequestBuilder {
         return new this(...arguments);
     }
 
-    route (route) {
+    $route (route) {
         this.builder.set('route', route);
 
         return this;
     }
 
-    parents (...parents) {
+    $parents (...parents) {
         this.builder.set('parents', parents);
 
         return this;
     }
 
-    parent () {
-        return this.parents(...arguments);
+    $parent () {
+        return this.$parents(...arguments);
     }
 
-    source (source) {
+    $source (source) {
         this.builder.set('source', source);
 
         return this;
     }
 
-    contentType (type) {
+    $contentType (type) {
         this.builder.set('headers.contentType', type);
 
         return this;
     }
 
-    param (name, value) {
+    $param (name, value) {
         if (typeof name === 'object') {
-            return this.params(...arguments);
+            return this.$params(...arguments);
         }
 
         this.builder.tap('params', function (params) {
@@ -64,7 +64,7 @@ class RequestBuilder {
         return this;
     }
 
-    params (params) {
+    $params (params) {
         this.builder.tap('params', function (value) {
             return Object.assign(value, params);
         });
@@ -72,7 +72,7 @@ class RequestBuilder {
         return this;
     }
 
-    filters (filters) {
+    $filters (filters) {
         this.builder.tap('params', function (params) {
             params.filter = params.filter || {};
             params.filter = Object.assign({}, filters);
@@ -82,19 +82,19 @@ class RequestBuilder {
         return this;
     }
 
-    filter (key, value) {
+    $filter (key, value) {
         if (typeof key === 'object') {
-            return this.filters(key);
+            return this.$filters(key);
         }
 
-        return this.filters({ [key]: value });
+        return this.$filters({ [key]: value });
     }
 
-    where () {
-        return this.filter(...arguments);
+    $where () {
+        return this.$filter(...arguments);
     }
 
-    include (...values) {
+    $include (...values) {
         this.builder.tap('params.include', (value) => {
             value.push(...values);
             return value;
@@ -108,7 +108,7 @@ class RequestBuilder {
         return this;
     }
 
-    sort (...values) {
+    $sort (...values) {
         this.builder.tap('params.sort', (value) => {
             value.push(...values);
             return value;
@@ -122,23 +122,23 @@ class RequestBuilder {
         return this;
     }
 
-    orderBy () {
-        return this.sort(...arguments);
+    $orderBy () {
+        return this.$sort(...arguments);
     }
 
-    sortDesc(...values) {
+    $sortDesc(...values) {
         const valuesDesc = values.map(function (value) {
             return '-' + value;
         });
 
-        return this.sort(valuesDesc);
+        return this.$sort(valuesDesc);
     }
 
-    orderByDesc () {
-        return this.sortDesc(...arguments);
+    $orderByDesc () {
+        return this.$sortDesc(...arguments);
     }
 
-    fields (fields) {
+    $fields (fields) {
         this.builder.tap('params.fields', (value) => {
             return Object.assign(value, fields);
         }, {});
@@ -157,7 +157,7 @@ class RequestBuilder {
         return this;
     }
 
-    append (...values) {
+    $append (...values) {
         this.builder.tap('params.append', (value) => {
             value.push(...values);
             return value;
@@ -171,7 +171,7 @@ class RequestBuilder {
         return this;
     }
 
-    page (page) {
+    $page (page) {
         this.builder.tap('params', function (params) {
             params.page = page;
             return params;
@@ -180,7 +180,7 @@ class RequestBuilder {
         return this;
     }
 
-    limit (limit) {
+    $limit (limit) {
         this.builder.tap('params', function (params) {
             params.limit = limit;
             return params;
@@ -189,95 +189,95 @@ class RequestBuilder {
         return this;
     }
 
-    select () {
-        return this.fields(...arguments);
+    $select () {
+        return this.$fields(...arguments);
     }
 
-    find (id) {
-        const key = this.getPrimaryKey();
+    $find (id) {
+        const key = this.$getPrimaryKey();
         const attributes = { [key]: id };
 
-        this.getModel().$fill(attributes);
+        this.$getModel().$fill(attributes);
 
-        return this.show();
+        return this.$show();
     }
 
-    index (options = {}) {
+    $index (options = {}) {
         const method = options.method || 'get';
         const data = options.data || null;
-        const url = options.url || this.getUrl('index');
+        const url = options.url || this.$getUrl('index');
 
-        return this.request({
+        return this.$request({
             method,
             data,
             url,
         });
     }
 
-    show (options = {}) {
+    $show (options = {}) {
         const method = options.method || 'get';
         const data = options.data || null;
-        const url = options.url || this.getUrl('show');
+        const url = options.url || this.$getUrl('show');
 
-        return this.request({
+        return this.$request({
             method,
             data,
             url,
         });
     }
 
-    refresh () {
-        return this.show(...arguments);
+    $refresh () {
+        return this.$show(...arguments);
     }
 
-    store (options = {}) {
+    $store (options = {}) {
         const method = options.method || 'post';
-        const data = options.data || this.getData();
-        const url = options.url || this.getUrl('store');
+        const data = options.data || this.$getData();
+        const url = options.url || this.$getUrl('store');
 
-        return this.request({
+        return this.$request({
             method,
             data,
             url,
         });
     }
 
-    save () {
-        return this.store(...arguments);
+    $save () {
+        return this.$store(...arguments);
     }
 
-    update (options = {}) {
+    $update (options = {}) {
         const method = options.method || 'put';
-        const data = options.data || this.getData();
-        const url = options.url || this.getUrl('update');
+        const data = options.data || this.$getData();
+        const url = options.url || this.$getUrl('update');
 
-        return this.request({
+        return this.$request({
             method,
             data,
             url,
         });
     }
 
-    destroy (options = {}) {
+    $destroy (options = {}) {
         const method = options.method || 'delete';
         const data = options.data || null;
-        const url = options.url || this.getUrl('destroy');
+        const url = options.url || this.$getUrl('destroy');
 
-        return this.request({
+        return this.$request({
             method,
             data,
             url,
         });
     }
 
-    delete () {
-        return this.destroy(...arguments);
+    $delete () {
+        return this.$destroy(...arguments);
     }
 
-    request (options) {
-        const model = this.getModel();
-        const client = this.getClient();
-        const config = this.getConfig(options);
+    $request (options) {
+        const model = this.$getModel();
+        const client = this.$getClient();
+        const config = this.$getConfig(options);
 
         return client()
             .request(config)
@@ -285,11 +285,11 @@ class RequestBuilder {
             .catch(error => transformError(error, model));
     }
 
-    getConfig (options = {}) {
+    $getConfig (options = {}) {
         const config = Object.assign(options, {
-            headers: this.getHeaders(),
-            params: this.getParams(),
-            paramsSerializer: this.getParamsSerializer(),
+            headers: this.$getHeaders(),
+            params: this.$getParams(),
+            paramsSerializer: this.$getParamsSerializer(),
         });
 
         if (this.builder.has('source')) {
@@ -299,56 +299,56 @@ class RequestBuilder {
         return config;
     }
 
-    getHeaders () {
+    $getHeaders () {
         return {
-            'Accept': this.getHeadersAccept(),
-            'Content-Type': this.getHeadersContentType(),
+            'Accept': this.$getHeadersAccept(),
+            'Content-Type': this.$getHeadersContentType(),
         };
     }
 
-    getHeadersAccept () {
+    $getHeadersAccept () {
         return 'application/json, text/plain, */*';
     }
 
-    getHeadersContentType () {
+    $getHeadersContentType () {
         const type = this.builder.get('headers.contentType');
         return ContentTypes[type] || ContentTypes.json;
     }
 
-    getUrl (action) {
+    $getUrl (action) {
         const route = `${this.builder.get('route')}.${action}`;
         const models = [this.builder.get('parents'), this.builder.get('model')].flat();
 
-        return this.getRouter().route(route, ...models);
+        return this.$getRouter().route(route, ...models);
     }
 
-    getData () {
+    $getData () {
         return this.builder.get('headers.contentType') === 'formdata' ?
-            this.getModel().$formdata():
-            this.getModel().$data();
+            this.$getModel().$formdata():
+            this.$getModel().$data();
     }
 
-    getModel () {
+    $getModel () {
         return this.builder.get('model');
     }
 
-    getRouter () {
+    $getRouter () {
         return this.builder.get('router');
     }
 
-    getPrimaryKey () {
+    $getPrimaryKey () {
         return this.builder.get('primaryKey');
     }
 
-    getClient () {
+    $getClient () {
         return this.builder.get('client');
     }
 
-    getParams () {
+    $getParams () {
         return this.builder.get('params');
     }
 
-    getParamsSerializer () {
+    $getParamsSerializer () {
         return function (params) {
             return stringify(params, {
                 arrayFormat: 'brackets',

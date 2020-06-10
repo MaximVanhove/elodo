@@ -20,7 +20,7 @@ describe('post', () => {
         }
 
         const source = createSource();
-        const promise = Post.$source(source).index().catch(errorHandler);
+        const promise = Post.$source(source).$index().catch(errorHandler);
         source.cancel();
 
         return promise;
@@ -36,7 +36,7 @@ describe('post', () => {
 
         const post = Post.$create();
         const source = createSource();
-        const promise = post.$source(source).store().catch(errorHandler);
+        const promise = post.$source(source).$store().catch(errorHandler);
         source.cancel();
 
         return promise;

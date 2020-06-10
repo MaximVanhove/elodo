@@ -97,19 +97,19 @@ export const createResource = function (options) {
         }
 
         static $route () {
-            return this.$request().route(...arguments);
+            return this.$request().$route(...arguments);
         }
 
         static $source () {
-            return this.$request().source(...arguments);
+            return this.$request().$source(...arguments);
         }
 
         static $index () {
-            return this.$request().index(...arguments);
+            return this.$request().$index(...arguments);
         }
 
         static $find () {
-            return this.$request().find(...arguments);
+            return this.$request().$find(...arguments);
         }
 
         $request () {
@@ -117,17 +117,17 @@ export const createResource = function (options) {
         }
 
         $route () {
-            return this.$request().route(...arguments);
+            return this.$request().$route(...arguments);
         }
 
         $source () {
-            return this.$request().source(...arguments);
+            return this.$request().$source(...arguments);
         }
 
         $parents (...parents) {
             const route = [parents, this].flat().map((model) => model._route).join('.');
 
-            return this.$route(route).parents(...parents);
+            return this.$route(route).$parents(...parents);
         }
 
         $parent () {
@@ -135,15 +135,15 @@ export const createResource = function (options) {
         }
 
         $index () {
-            return this.$request().index(...arguments);
+            return this.$request().$index(...arguments);
         }
 
         $find () {
-            return this.$request().find(...arguments);
+            return this.$request().$find(...arguments);
         }
 
         $show () {
-            return this.$request().show(...arguments);
+            return this.$request().$show(...arguments);
         }
 
         $refresh () {
@@ -151,7 +151,7 @@ export const createResource = function (options) {
         }
 
         $store () {
-            return this.$request().store(...arguments);
+            return this.$request().$store(...arguments);
         }
 
         $save () {
@@ -159,11 +159,11 @@ export const createResource = function (options) {
         }
 
         $update () {
-            return this.$request().update(...arguments);
+            return this.$request().$update(...arguments);
         }
 
         $destroy () {
-            return this.$request().destroy(...arguments);
+            return this.$request().$destroy(...arguments);
         }
 
         $delete () {

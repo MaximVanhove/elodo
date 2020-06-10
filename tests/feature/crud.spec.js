@@ -117,7 +117,7 @@ describe('crud', () => {
         const post = Post.$create({ id: 1 });
         const comment = Comment.$create({ body: 'Hello' });
 
-        await comment.$parent(post).store();
+        await comment.$parent(post).$store();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -135,7 +135,7 @@ describe('crud', () => {
 
         Moxios.stubRequest(/.*/, { response });
 
-        const post = await Post.$route('posts.last').show();
+        const post = await Post.$route('posts.last').$show();
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);
@@ -153,7 +153,7 @@ describe('crud', () => {
         Moxios.stubRequest(/.*/, {});
 
         const post = Post.$create({ id: 1 });
-        await post.$route('posts.sync').store({ data });
+        await post.$route('posts.sync').$store({ data });
 
         const request = Moxios.requests.mostRecent();
         expect(request.url).toEqual(url);

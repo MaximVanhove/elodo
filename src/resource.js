@@ -7,7 +7,7 @@ export const createResource = function (options) {
         router,
     } = options;
 
-    return class {
+    return class Resource {
         /**
          * Construct model
          */

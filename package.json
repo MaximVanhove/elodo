@@ -40,7 +40,7 @@
     "qs": "^6.9.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "webpack-merge": "^4.2.2"
   },
   "bugs": {
